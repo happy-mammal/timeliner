@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timeliner/ui/screens/search.dart';
 import 'package:timeliner/ui/screens/home.dart';
-import 'package:timeliner/ui/screens/library.dart';
+import 'package:timeliner/ui/screens/intrests.dart';
 import 'package:timeliner/ui/screens/taged.dart';
 import 'package:timeliner/ui/widgets/compos/bottom_navigaton_bar.dart';
 
@@ -20,7 +20,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       child: Scaffold(
         body: PageView(
           controller: _pageController,
-          children: [HomeScreen(), SearchScreen(), LibraryScreen(), TagedScreen()],
+          children: [HomeScreen(), SearchScreen(), IntrestsScreen(), TagedScreen()],
           onPageChanged: (page) {
             setState(() {
               currentIndex = page;

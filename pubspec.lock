@@ -329,6 +329,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.19"
+  timeline_widget:
+    dependency: "direct main"
+    description:
+      name: timeline_widget
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
   typed_data:
     dependency: transitive
     description:

@@ -39,6 +39,7 @@ class _CapsuleCardItemState extends State<CapsuleCardItem> {
                     'Technology',
                     style: GoogleFonts.roboto(fontSize: 15, color: Colors.white),
                   ),
+                  toAnimate: false,
                   shape: BadgeShape.square,
                   borderRadius: BorderRadius.circular(6),
                   badgeColor: Colors.purple,

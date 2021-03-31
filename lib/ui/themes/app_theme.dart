@@ -7,9 +7,14 @@ class AppTheme {
 
   ThemeData darkTheme() {
     return ThemeData(
+      shadowColor: Color(0xff3A86FF),
+      primaryColor: Color(0xff3A86FF),
+      secondaryHeaderColor: Color(0xff3A86FF),
+      accentColor: Color(0xff3A86FF),
+      backgroundColor: Colors.black,
       brightness: Brightness.dark,
-      bottomAppBarColor: Colors.black,
       cardColor: Colors.black,
+      bottomAppBarColor: Colors.black,
     );
   }
 }

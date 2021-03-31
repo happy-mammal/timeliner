@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
             TopNewsList(pads: [0, 0, 0, 0]),
             ResponsiveText(text: ast.homeNames[2], min: 28, max: 30, lines: 1, pads: [20, 5, 20, 5], isBold: true, isItalic: false),
             CapsuleCard(
-              pads: [12, 5, 12, 5],
+              pads: [20, 10, 20, 10],
               heading: "FROM SOURCE YOU FOLLOW",
               title: "Abbotsford News",
               items: <CapsuleCardItem>[
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             CapsuleCard(
-              pads: [12, 5, 12, 5],
+              pads: [20, 10, 20, 10],
               heading: "FROM CATEGORY YOU LIKE",
               title: "Technology",
               items: <CapsuleCardItem>[
@@ -64,10 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             ResponsiveText(text: ast.homeNames[1], min: 28, max: 30, lines: 1, pads: [20, 5, 20, 5], isBold: true, isItalic: false),
-            JumboCard(pads: [12, 5, 12, 5], image: ast.imageUrls[0]),
-            JumboCard(pads: [12, 5, 12, 5], image: ast.imageUrls[0]),
-            JumboCard(pads: [12, 5, 12, 5], image: ast.imageUrls[0]),
-            JumboCard(pads: [12, 5, 12, 5], image: ast.imageUrls[0]),
+            JumboCard(pads: [20, 10, 20, 10], image: ast.imageUrls[0]),
+            JumboCard(pads: [20, 10, 20, 10], image: ast.imageUrls[0]),
+            JumboCard(pads: [20, 10, 20, 10], image: ast.imageUrls[0]),
+            JumboCard(pads: [20, 10, 20, 10], image: ast.imageUrls[0]),
           ],
         ),
       ),

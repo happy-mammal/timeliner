@@ -113,6 +113,7 @@ class _SearchCardState extends State<SearchCard> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Badge(
+                        toAnimate: false,
                         badgeColor: Colors.green,
                         badgeContent: Text("Science", style: GoogleFonts.roboto(fontSize: 16, color: Colors.white)),
                         shape: BadgeShape.square,

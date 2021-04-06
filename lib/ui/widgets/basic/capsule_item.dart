@@ -17,46 +17,51 @@ class _CapsuleCardItemState extends State<CapsuleCardItem> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CardImage(
-            radius: [10, 10, 10, 10],
-            pads: [0, 0, 10, 0],
-            url: widget.image,
-            width: 70,
-            height: 70,
-          ),
-          Expanded(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Badge(
-                  badgeContent: Text(
-                    'Technology',
-                    style: GoogleFonts.roboto(fontSize: 15, color: Colors.white),
+      child: InkWell(
+        onTap: () {
+          print('Click');
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CardImage(
+              radius: [10, 10, 10, 10],
+              pads: [0, 0, 10, 0],
+              url: widget.image,
+              width: 70,
+              height: 70,
+            ),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Badge(
+                    badgeContent: Text(
+                      'Technology',
+                      style: GoogleFonts.roboto(fontSize: 15, color: Colors.white),
+                    ),
+                    toAnimate: false,
+                    shape: BadgeShape.square,
+                    borderRadius: BorderRadius.circular(6),
+                    badgeColor: Colors.purple,
                   ),
-                  toAnimate: false,
-                  shape: BadgeShape.square,
-                  borderRadius: BorderRadius.circular(6),
-                  badgeColor: Colors.purple,
                 ),
-              ),
-              ResponsiveText(
-                pads: [0, 0, 0, 0],
-                text: widget.content,
-                min: 15,
-                max: 17,
-                lines: 2,
-                isBold: false,
-                isItalic: false,
-              ),
-            ],
-          ))
-        ],
+                ResponsiveText(
+                  pads: [0, 0, 0, 0],
+                  text: widget.content,
+                  min: 15,
+                  max: 17,
+                  lines: 2,
+                  isBold: false,
+                  isItalic: false,
+                ),
+              ],
+            ))
+          ],
+        ),
       ),
     );
   }

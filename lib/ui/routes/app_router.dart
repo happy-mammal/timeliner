@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:timeliner/ui/screens/settings.dart';
+import 'package:timeliner/ui/screens/viewarticle.dart';
 import 'package:timeliner/ui/widgets/basic/bottom_navigator.dart';
 
 class AppRouter {
@@ -25,6 +26,11 @@ class AppRouter {
       case '/settings':
         return MaterialPageRoute(
           builder: (_) => SettingsScreen(),
+        );
+
+      case '/viewarticle':
+        return MaterialPageRoute(
+          builder: (_) => ViewArticleScreen(),
         );
 
       default:

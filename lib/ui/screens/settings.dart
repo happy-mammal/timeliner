@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:timeliner/logic/bloc/app_theme_bloc.dart';
+import 'package:timeliner/logic/app_theme_bloc/app_theme_bloc.dart';
 import 'package:timeliner/ui/widgets/basic/responsive_text.dart';
 import 'package:timeliner/ui/widgets/compos/top_app_bar.dart';
 import 'package:timeliner/utils/app_strings.dart';

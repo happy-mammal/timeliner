@@ -23,7 +23,7 @@ class _CapsuleCardState extends State<CapsuleCard> {
           height: MediaQuery.of(context).size.height * 0.50,
           width: MediaQuery.of(context).size.width,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ResponsiveText(
@@ -46,6 +46,7 @@ class _CapsuleCardState extends State<CapsuleCard> {
               ),
               Expanded(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: widget.items,
                 ),
               ),

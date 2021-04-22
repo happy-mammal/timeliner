@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timeliner/logic/cubit/curated_category_feed_cubit.dart';
+import 'package:timeliner/logic/cubit/curated_source_feed_cubit.dart';
+import 'package:timeliner/logic/cubit/get_stories_cubit.dart';
 import 'package:timeliner/ui/screens/search.dart';
 import 'package:timeliner/ui/screens/home.dart';
 import 'package:timeliner/ui/screens/intrests.dart';
@@ -16,11 +20,24 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   @override
   Widget build(BuildContext context) {
     PageController _pageController = PageController();
+
     return SafeArea(
       child: Scaffold(
         body: PageView(
           controller: _pageController,
-          children: [HomeScreen(), SearchScreen(), IntrestsScreen(), TagedScreen()],
+          children: [
+            MultiBlocProvider(
+              providers: [
+                BlocProvider<GetStoriesCubit>(create: (BuildContext context) => GetStoriesCubit()),
+                BlocProvider<CuratedSourceFeedCubit>(create: (BuildContext context) => CuratedSourceFeedCubit()),
+                BlocProvider<CuratedCategoryFeedCubit>(create: (BuildContext context) => CuratedCategoryFeedCubit()),
+              ],
+              child: HomeScreen(),
+            ),
+            SearchScreen(),
+            IntrestsScreen(),
+            TagedScreen(),
+          ],
           onPageChanged: (page) {
             setState(() {
               currentIndex = page;

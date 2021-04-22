@@ -5,9 +5,9 @@ import 'package:timeliner/ui/widgets/basic/card_image.dart';
 import 'package:timeliner/ui/widgets/basic/responsive_text.dart';
 
 class CapsuleCardItem extends StatefulWidget {
-  final String image, content;
+  final String image, content, category;
 
-  const CapsuleCardItem({Key key, this.image, this.content}) : super(key: key);
+  const CapsuleCardItem({Key key, this.image, this.content, this.category}) : super(key: key);
   @override
   _CapsuleCardItemState createState() => _CapsuleCardItemState();
 }
@@ -40,7 +40,7 @@ class _CapsuleCardItemState extends State<CapsuleCardItem> {
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Badge(
                     badgeContent: Text(
-                      'Technology',
+                      widget.category,
                       style: GoogleFonts.roboto(fontSize: 15, color: Colors.white),
                     ),
                     toAnimate: false,

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "153436020144",
+    "firebase_url": "https://timeliner-1370d-default-rtdb.firebaseio.com",
+    "project_id": "timeliner-1370d",
+    "storage_bucket": "timeliner-1370d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153436020144:android:9c3a54b9c766df0ffd8a75",
+        "android_client_info": {
+          "package_name": "com.example.timeliner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153436020144-q9anngibbbr6glcp7prpg0f7jrti4ep0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.timeliner",
+            "certificate_hash": "f3bb56b52184abdba5a05a9034c24a4ce4504cc9"
+          }
+        },
+        {
+          "client_id": "153436020144-3gsf9d7s4lglb247pg719a0cnh33k0bc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCev70CfMRUPGyjzdZ6zvfgdOaU-g8QJTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153436020144-3gsf9d7s4lglb247pg719a0cnh33k0bc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

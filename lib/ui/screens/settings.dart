@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeliner/logic/app_theme_bloc/app_theme_bloc.dart';
+import 'package:timeliner/logic/auth_bloc/auth_bloc.dart';
 import 'package:timeliner/ui/widgets/basic/responsive_text.dart';
 import 'package:timeliner/ui/widgets/compos/top_app_bar.dart';
 import 'package:timeliner/utils/app_strings.dart';
@@ -13,6 +15,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   AppThemeBloc appThemeBloc;
+  AuthBloc authBloc;
   bool isNotify = false;
   bool isDark = false;
 
@@ -32,9 +35,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     appThemeBloc = BlocProvider.of<AppThemeBloc>(context);
+    authBloc = BlocProvider.of<AuthBloc>(context);
 
     Future<bool> _onBackPressed() {
-      Navigator.of(context).popAndPushNamed('/');
+      Navigator.of(context).popAndPushNamed('/home');
       return Future.value(false);
     }
 
@@ -44,36 +48,54 @@ class _SettingsScreenState extends State<SettingsScreen> {
       onWillPop: _onBackPressed,
       child: SafeArea(
         child: Scaffold(
-          body: BlocListener<AppThemeBloc, AppThemeState>(
-            listener: (context, state) {
-              if (state is AppThemeInitial) {
-                setState(() {
-                  isDark = false;
-                });
-              } else if (state is AppThemeLoading) {
-                setState(() {
-                  isDark = false;
-                });
-              } else if (state is AppThemeFailed) {
-                setState(() {
-                  isDark = false;
-                });
-              } else if (state is AppThemeSuccess) {
-                if (state.themeMode == ThemeMode.dark) {
-                  setState(() {
-                    isDark = true;
-                  });
-                } else {
-                  setState(() {
-                    isDark = false;
-                  });
-                }
-              } else {
-                setState(() {
-                  isDark = isDark;
-                });
-              }
-            },
+          body: MultiBlocListener(
+            listeners: [
+              BlocListener<AppThemeBloc, AppThemeState>(
+                listener: (context, state) {
+                  if (state is AppThemeInitial) {
+                    setState(() {
+                      isDark = false;
+                    });
+                  } else if (state is AppThemeLoading) {
+                    setState(() {
+                      isDark = false;
+                    });
+                  } else if (state is AppThemeFailed) {
+                    setState(() {
+                      isDark = false;
+                    });
+                  } else if (state is AppThemeSuccess) {
+                    if (state.themeMode == ThemeMode.dark) {
+                      setState(() {
+                        isDark = true;
+                      });
+                    } else {
+                      setState(() {
+                        isDark = false;
+                      });
+                    }
+                  } else {
+                    setState(() {
+                      isDark = isDark;
+                    });
+                  }
+                },
+              ),
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is AuthInitial) {
+                    print('IDK');
+                  } else if (state is AuthLoading) {
+                    print('CHECKING');
+                  } else if (state is SignOutSuccess) {
+                    print('SIGNOUT SUCCESS');
+                    Navigator.of(context).pushNamedAndRemoveUntil('/auth', (route) => false);
+                  } else if (state is SignOutFailed) {
+                    print('SIGNOUT FAILED');
+                  }
+                },
+              ),
+            ],
             child: ListView(
               children: [
                 TopAppBar(pads: [20, 10, 20, 10], title: ast.intrestNames[0], profile: ast.profileUrl),
@@ -81,7 +103,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 personalPreferences(),
                 appPreferences(appThemeBloc),
                 otherSettings(),
-                logoutSetting(),
+                logoutSetting(authBloc),
               ],
             ),
           ),
@@ -111,17 +133,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    /*CardTextWithOverflow(
-                      text: "Yash Lalit",
-                      color: Colors.grey[900],
-                      maxlines: 1,
-                      maxsize: 22,
-                      minsize: 18,
-                      padLeft: 20,
-                      padRight: 10,
-                      isItalic: false,
-                      isBold: true,
-                    ),*/
                     ResponsiveText(
                       text: "Yash Lalit",
                       lines: 1,
@@ -131,17 +142,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       isBold: true,
                       pads: [20, 0, 10, 0],
                     ),
-                    /*CardTextWithOverflow(
-                      text: "yashlalit.23@gmail.com",
-                      color: Colors.grey[800],
-                      maxlines: 1,
-                      maxsize: 18,
-                      minsize: 16,
-                      padLeft: 20,
-                      padRight: 10,
-                      isItalic: false,
-                      isBold: false,
-                    ),*/
                     ResponsiveText(
                       text: "yashlalit.23@gmail.com",
                       lines: 1,
@@ -351,17 +351,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.favorite_rounded, color: Color(0xffFF006E), size: 30),
-                  /*CardTextWithOverflow(
-                    text: "Tell a Friend",
-                    maxlines: 1,
-                    minsize: 20,
-                    maxsize: 20,
-                    color: Colors.grey[900],
-                    isBold: false,
-                    isItalic: false,
-                    padLeft: 20,
-                    padRight: 10,
-                  ),*/
                   ResponsiveText(
                     text: "Tell a Friend",
                     lines: 1,
@@ -371,9 +360,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     isBold: false,
                     pads: [20, 0, 10, 0],
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: 30,
+                  InkWell(
+                    onTap: () {
+                      Share.share(
+                          "Hey,\n\nTimeLiner is an intrest tracking app which provides you a real-time history feed of your specified intrest, also it's a simple,fast, and easy to use version news app as well.\n\nGet it for free at\nhttps://play.google.com/store/apps/details?id=",
+                          subject: "Hello, check out TimeLiner for free today!");
+                    },
+                    child: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 30,
+                    ),
                   )
                 ],
               ),
@@ -385,17 +381,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.info_rounded, color: Color(0xffFB5607), size: 30),
-                  /*CardTextWithOverflow(
-                    text: "About this App",
-                    maxlines: 1,
-                    minsize: 20,
-                    maxsize: 20,
-                    color: Colors.grey[900],
-                    isBold: false,
-                    isItalic: false,
-                    padLeft: 20,
-                    padRight: 10,
-                  ),*/
                   ResponsiveText(
                     text: "About this App",
                     lines: 1,
@@ -419,17 +404,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.attach_money_rounded, color: Color(0xff8338EC), size: 30),
-                  /*CardTextWithOverflow(
-                    text: "Donate and Help",
-                    maxlines: 1,
-                    minsize: 20,
-                    maxsize: 20,
-                    color: Colors.grey[900],
-                    isBold: false,
-                    isItalic: false,
-                    padLeft: 20,
-                    padRight: 10,
-                  ),*/
                   ResponsiveText(
                     text: "Donate and Contribute",
                     lines: 1,
@@ -452,7 +426,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget logoutSetting() {
+  Widget logoutSetting(AuthBloc authBloc) {
     return Padding(
       padding: EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Card(
@@ -468,17 +442,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.logout, color: Colors.indigo[900], size: 30),
-                  /*CardTextWithOverflow(
-                    text: "Log Out",
-                    maxlines: 1,
-                    minsize: 20,
-                    maxsize: 20,
-                    color: Colors.grey[900],
-                    isBold: false,
-                    isItalic: false,
-                    padLeft: 20,
-                    padRight: 10,
-                  ),*/
                   ResponsiveText(
                     text: "Log Out",
                     lines: 1,
@@ -488,9 +451,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     isBold: false,
                     pads: [20, 0, 10, 0],
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: 30,
+                  InkWell(
+                    onTap: () {
+                      authBloc.add(SignOutEvent());
+                    },
+                    child: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 30,
+                    ),
                   )
                 ],
               ),

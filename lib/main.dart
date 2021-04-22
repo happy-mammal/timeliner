@@ -1,11 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timeliner/logic/app_theme_bloc/app_theme_bloc.dart';
+import 'package:timeliner/logic/auth_bloc/auth_bloc.dart';
 import 'package:timeliner/ui/routes/app_router.dart';
 import 'package:timeliner/ui/themes/app_theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(TimeLiner());
 }
 
@@ -20,6 +24,7 @@ class _TimeLinerState extends State<TimeLiner> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AppThemeBloc>(create: (BuildContext context) => AppThemeBloc()..add(GetAppThemeEvent())),
+        BlocProvider<AuthBloc>(create: (BuildContext context) => AuthBloc()..add(AppStartedEvent())),
       ],
       child: AppThemeSettings(),
     );

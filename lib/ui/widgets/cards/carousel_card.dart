@@ -16,7 +16,7 @@ class _CarouselCardState extends State<CarouselCard> {
       padding: EdgeInsets.fromLTRB(widget.pads[0], widget.pads[1], widget.pads[2], widget.pads[3]),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).pushNamedAndRemoveUntil('/viewarticle', (route) => false);
+          Navigator.of(context).pushNamed('/viewarticle');
         },
         child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),

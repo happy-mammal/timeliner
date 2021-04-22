@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:timeliner/ui/widgets/basic/capsule_item.dart';
 import 'package:timeliner/ui/widgets/basic/responsive_text.dart';
 
 class CapsuleCard extends StatefulWidget {
   final List<double> pads;
   final String heading, title;
-  final List<Widget> items;
+  final List data;
 
-  const CapsuleCard({Key key, this.pads, this.heading, this.title, this.items}) : super(key: key);
+  const CapsuleCard({Key key, this.pads, this.heading, this.title, this.data}) : super(key: key);
   @override
   _CapsuleCardState createState() => _CapsuleCardState();
 }
@@ -45,9 +46,15 @@ class _CapsuleCardState extends State<CapsuleCard> {
                 isItalic: false,
               ),
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: widget.items,
+                child: ListView.builder(
+                  itemCount: widget.data.length,
+                  itemBuilder: (context, index) {
+                    return CapsuleCardItem(
+                      image: widget.data[index]["image"],
+                      content: widget.data[index]["title"],
+                      category: widget.data[index]["category"],
+                    );
+                  },
                 ),
               ),
             ],

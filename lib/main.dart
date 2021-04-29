@@ -2,10 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:timeliner/logic/app_theme_bloc/app_theme_bloc.dart';
-import 'package:timeliner/logic/auth_bloc/auth_bloc.dart';
-import 'package:timeliner/ui/routes/app_router.dart';
-import 'package:timeliner/ui/themes/app_theme.dart';
+import 'package:timeliner/business_logic/blocs/auth/auth_bloc.dart';
+import 'package:timeliner/business_logic/cubits/app_theme/app_theme_cubit.dart';
+import 'package:timeliner/presentation/routes/app_route.dart';
+import 'package:timeliner/presentation/themes/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,59 +13,35 @@ void main() async {
   runApp(TimeLiner());
 }
 
-class TimeLiner extends StatefulWidget {
-  @override
-  _TimeLinerState createState() => _TimeLinerState();
-}
-
-class _TimeLinerState extends State<TimeLiner> {
+class TimeLiner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AppThemeBloc>(create: (BuildContext context) => AppThemeBloc()..add(GetAppThemeEvent())),
+        BlocProvider<AppThemeCubit>(create: (BuildContext context) => AppThemeCubit()),
         BlocProvider<AuthBloc>(create: (BuildContext context) => AuthBloc()..add(AppStartedEvent())),
       ],
-      child: AppThemeSettings(),
+      child: TimeLinerMaterialApp(),
     );
   }
 }
 
-class AppThemeSettings extends StatefulWidget {
+class TimeLinerMaterialApp extends StatefulWidget {
   @override
-  _AppThemeSettingsState createState() => _AppThemeSettingsState();
+  _TimeLinerMaterialAppState createState() => _TimeLinerMaterialAppState();
 }
 
-class _AppThemeSettingsState extends State<AppThemeSettings> {
-  AppTheme _appTheme = AppTheme();
-  AppRouter _appRouter = AppRouter();
-
+class _TimeLinerMaterialAppState extends State<TimeLinerMaterialApp> {
+  AppRoute appRoute = AppRoute();
+  AppTheme appTheme = AppTheme();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppThemeBloc, AppThemeState>(
-      builder: (context, state) {
-        if (state is AppThemeInitial) {
-          return materialApp(ThemeMode.system);
-        } else if (state is AppThemeLoading) {
-          return materialApp(ThemeMode.system);
-        } else if (state is AppThemeSuccess) {
-          return materialApp(state.themeMode);
-        } else if (state is AppThemeFailed) {
-          return materialApp(state.themeMode);
-        } else {
-          return materialApp(ThemeMode.system);
-        }
-      },
-    );
-  }
-
-  Widget materialApp(ThemeMode themeMode) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: _appTheme.lightTheme(),
-      darkTheme: _appTheme.darkTheme(),
-      themeMode: themeMode,
-      onGenerateRoute: _appRouter.onGenerateRoute,
+      theme: appTheme.lightTheme(),
+      darkTheme: appTheme.darkTheme(),
+      themeMode: context.select((AppThemeCubit appThemeCubit) => appThemeCubit.state.themeMode),
+      onGenerateRoute: appRoute.onGenerateRoute,
     );
   }
 }

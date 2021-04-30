@@ -104,12 +104,22 @@ class _TimeLinerSideBarState extends State<TimeLinerSideBar> {
               Divider(thickness: 3, indent: 10, endIndent: 10),
               SizedBox(height: 20),
               TimeLinerSideBarButton(
-                icon: Icons.add_sharp,
-                iconSize: 50,
+                icon: Icons.logout,
+                iconSize: 30,
                 iconColor: Colors.orange,
-                onButtonPressed: () {},
+                onButtonPressed: () {
+                  BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
+                },
               ),
-              SizedBox(height: 30),
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is SignOutSuccessfull) {
+                    Navigator.of(context).pushReplacementNamed('/');
+                    BlocProvider.of<AuthBloc>(context).add(AppStartedEvent());
+                  } else if (state is SignOutFailed) {}
+                },
+                child: SizedBox(height: 30),
+              ),
             ],
           ),
         ),

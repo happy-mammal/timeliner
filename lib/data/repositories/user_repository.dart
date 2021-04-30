@@ -52,20 +52,43 @@ class UserRepository {
     if (_result.hasException) {
       throw Exception([_result.exception]);
     } else if (!_result.hasException) {
-      print(_result.data["getUserDetail"]["id"]);
       return _result.data["getUserDetail"]["id"] != null ? true : false;
     } else {
       return false;
     }
   }
 
-  Future<String> createUserAccount(String uid, String name, String email, String profile) async {
+  Future<List> fetchUserDetails(String uid) async {
+    GraphQLClient _client = graphQLConfiguration.myGQLClient();
+    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.getUserDetails(uid))));
+    if (_result.hasException) {
+      throw Exception([_result.exception]);
+    } else if (!_result.hasException) {
+      return [_result.data["getUserDetail"]];
+    } else {
+      return null;
+    }
+  }
+
+  Future<List> createUserAccount(String uid, String name, String email, String profile) async {
     GraphQLClient _client = graphQLConfiguration.myGQLClient();
     QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.addUser(uid, name, email, profile))));
     if (_result.hasException) {
       throw Exception([_result.exception]);
     } else if (!_result.hasException) {
-      return _result.data["addUser"][0];
+      return [_result.data["addUser"]];
+    } else {
+      return null;
+    }
+  }
+
+  Future<List> addIntrests(List<String> intrests, String uid) async {
+    GraphQLClient _client = graphQLConfiguration.myGQLClient();
+    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.addIntrest(intrests, uid))));
+    if (_result.hasException) {
+      throw Exception([_result.exception]);
+    } else if (!_result.hasException) {
+      return [_result.data["addIntrest"]];
     } else {
       return null;
     }

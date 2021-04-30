@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timeliner/business_logic/blocs/user/user_bloc.dart';
 import 'package:timeliner/business_logic/cubits/app_theme/app_theme_cubit.dart';
 import 'package:timeliner/presentation/pages/feed.dart';
 import 'package:timeliner/presentation/pages/search.dart';
 import 'package:timeliner/presentation/widgets/side_bar.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomePage extends StatefulWidget {
+  final Map<String, String> data;
+
+  const HomePage({Key key, this.data}) : super(key: key);
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     BlocProvider.of<AppThemeCubit>(context).getAppTheme();
+    BlocProvider.of<UserBloc>(context).add(GetUserDetailsEvent(uid: widget.data["uid"]));
     super.initState();
   }
 

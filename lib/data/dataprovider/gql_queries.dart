@@ -131,4 +131,19 @@ class GqlQueries {
       }
     ''';
   }
+
+  String addIntrest(List<String> intrests, String uid) {
+    return '''
+      mutation{
+        addIntrest(intrest:''' +
+        intrests.toString() +
+        ''',uid:"''' +
+        uid +
+        '''"){
+          id
+          intrest
+        }
+      }
+    ''';
+  }
 }

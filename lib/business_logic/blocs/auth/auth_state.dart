@@ -27,3 +27,7 @@ class SignInFailed extends AuthState {
 
   SignInFailed({@required this.message});
 }
+
+class SignOutSuccessfull extends AuthState {}
+
+class SignOutFailed extends AuthState {}

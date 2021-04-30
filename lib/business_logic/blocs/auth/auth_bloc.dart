@@ -52,6 +52,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (e) {
         yield SignInFailed(message: "Exception: " + e.toString());
       }
+    } else if (event is SignOutEvent) {
+      yield AuthLoading();
+      try {
+        await userRepository.signOutUser();
+        yield SignOutSuccessfull();
+      } catch (e) {
+        yield SignOutFailed();
+      }
     }
   }
 }

@@ -58,13 +58,13 @@ class UserRepository {
     }
   }
 
-  Future<List> fetchUserDetails(String uid) async {
+  Future<Map<String, dynamic>> fetchUserDetails(String uid) async {
     GraphQLClient _client = graphQLConfiguration.myGQLClient();
     QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.getUserDetails(uid))));
     if (_result.hasException) {
       throw Exception([_result.exception]);
     } else if (!_result.hasException) {
-      return [_result.data["getUserDetail"]];
+      return _result.data["getUserDetail"];
     } else {
       return null;
     }

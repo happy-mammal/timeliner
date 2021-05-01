@@ -20,7 +20,7 @@ class AddIntrestsSuccessfull extends UserState {
 class AddIntrestsFailed extends UserState {}
 
 class GetUserDetailsSuccessfull extends UserState {
-  final List intrests;
+  final Map<String, dynamic> intrests;
 
   GetUserDetailsSuccessfull({@required this.intrests});
 }

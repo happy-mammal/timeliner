@@ -36,7 +36,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         var result = await userRepository.addIntrests(event.intrests, event.uid);
 
         if (result[0] != null) {
-          yield AddIntrestsSuccessfull(intrests: result[0]["intrest"]);
+          yield AddIntrestsSuccessfull(intrests: result);
         } else {
           yield AddIntrestsFailed();
         }
@@ -47,11 +47,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       yield UserLoading();
       try {
         var result = await userRepository.fetchUserDetails(event.uid);
-        if (result != null) {
-          yield GetUserDetailsSuccessfull(intrests: result[0]["intrest"]);
-        } else {
-          yield GetUserDetailsFailed();
-        }
+        yield GetUserDetailsSuccessfull(intrests: result);
       } catch (e) {
         yield GetUserDetailsFailed();
       }

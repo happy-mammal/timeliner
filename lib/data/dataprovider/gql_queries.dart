@@ -43,6 +43,8 @@ class GqlQueries {
           image
           source
           title
+          category
+          publishedAt
         }
       }
     ''';
@@ -102,9 +104,7 @@ class GqlQueries {
       query{
         getArticles(term:"''' +
         term +
-        '''",limit:''' +
-        limit +
-        '''){
+        '''"){
           id
           title
           image

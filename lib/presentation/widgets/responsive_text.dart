@@ -25,7 +25,7 @@ class _TimeLinerResponsiveTextState extends State<TimeLinerResponsiveText> {
         minFontSize: widget.min,
         maxFontSize: widget.max,
         maxLines: widget.lines,
-        overflow: TextOverflow.ellipsis,
+        overflow: TextOverflow.clip,
         style: GoogleFonts.roboto(
           fontStyle: widget.isItalic ? FontStyle.italic : FontStyle.normal,
           fontWeight: widget.isBold ? FontWeight.bold : FontWeight.normal,

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:timeliner/business_logic/blocs/user/user_bloc.dart';
 import 'package:timeliner/business_logic/cubits/app_theme/app_theme_cubit.dart';
+import 'package:timeliner/business_logic/cubits/curated_category/curated_category_cubit.dart';
+import 'package:timeliner/business_logic/cubits/get_stories/get_stories_cubit.dart';
+import 'package:timeliner/business_logic/cubits/get_trending/get_trending_cubit.dart';
+import 'package:timeliner/business_logic/cubits/search/search_cubit.dart';
 import 'package:timeliner/presentation/pages/feed.dart';
 import 'package:timeliner/presentation/pages/search.dart';
 import 'package:timeliner/presentation/widgets/side_bar.dart';
@@ -18,7 +21,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     BlocProvider.of<AppThemeCubit>(context).getAppTheme();
-    BlocProvider.of<UserBloc>(context).add(GetUserDetailsEvent(uid: widget.data["uid"]));
     super.initState();
   }
 
@@ -40,8 +42,20 @@ class _HomePageState extends State<HomePage> {
                 scrollDirection: Axis.vertical,
                 controller: _pageController,
                 children: [
-                  FeedPage(),
-                  SearchPage(),
+                  MultiBlocProvider(
+                    providers: [
+                      BlocProvider<GetStoriesCubit>(create: (BuildContext context) => GetStoriesCubit()),
+                      BlocProvider<GetTrendingCubit>(create: (BuildContext context) => GetTrendingCubit()),
+                      BlocProvider<CuratedCategoryCubit>(create: (BuildContext context) => CuratedCategoryCubit()),
+                    ],
+                    child: FeedPage(data: widget.data),
+                  ),
+                  MultiBlocProvider(
+                    providers: [
+                      BlocProvider<SearchCubit>(create: (BuildContext context) => SearchCubit()),
+                    ],
+                    child: SearchPage(),
+                  ),
                 ],
               ),
             ),

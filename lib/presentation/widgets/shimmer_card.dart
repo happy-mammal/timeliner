@@ -52,7 +52,7 @@ class _TimeLinerShimmerCardState extends State<TimeLinerShimmerCard> {
                     period: Duration(milliseconds: 500),
                     child: SizedBox(
                       width: widget.width,
-                      height: widget.height * 0.02,
+                      height: widget.height * 0.03,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                           color: Theme.of(context).canvasColor,
@@ -63,43 +63,7 @@ class _TimeLinerShimmerCardState extends State<TimeLinerShimmerCard> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 0, right: 8, bottom: 1, left: 8),
-                  child: Shimmer.fromColors(
-                    highlightColor: Theme.of(context).backgroundColor,
-                    baseColor: Theme.of(context).canvasColor,
-                    period: Duration(milliseconds: 500),
-                    child: SizedBox(
-                      width: widget.width,
-                      height: widget.height * 0.02,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).canvasColor,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 0, right: 8, bottom: 1, left: 8),
-                  child: Shimmer.fromColors(
-                    highlightColor: Theme.of(context).backgroundColor,
-                    baseColor: Theme.of(context).canvasColor,
-                    period: Duration(milliseconds: 500),
-                    child: SizedBox(
-                      width: widget.width,
-                      height: widget.height * 0.02,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).canvasColor,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5, right: 8, bottom: 5, left: 8),
+                  padding: const EdgeInsets.only(top: 10, right: 8, bottom: 10, left: 8),
                   child: Shimmer.fromColors(
                     highlightColor: Theme.of(context).backgroundColor,
                     baseColor: Theme.of(context).canvasColor,
@@ -107,6 +71,24 @@ class _TimeLinerShimmerCardState extends State<TimeLinerShimmerCard> {
                     child: SizedBox(
                       width: widget.width,
                       height: widget.height * 0.03,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).canvasColor,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, right: 8, bottom: 5, left: 8),
+                  child: Shimmer.fromColors(
+                    highlightColor: Theme.of(context).backgroundColor,
+                    baseColor: Theme.of(context).canvasColor,
+                    period: Duration(milliseconds: 500),
+                    child: SizedBox(
+                      width: widget.width,
+                      height: widget.height * 0.04,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                           color: Theme.of(context).canvasColor,

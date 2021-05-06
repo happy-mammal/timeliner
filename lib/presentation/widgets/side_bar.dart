@@ -43,14 +43,22 @@ class _TimeLinerSideBarState extends State<TimeLinerSideBar> {
                       icon: state.user.photoURL,
                       iconSize: MediaQuery.of(context).size.width,
                       iconColor: Colors.grey,
-                      onButtonPressed: () {},
+                      onButtonPressed: () {
+                        setState(() {
+                          widget.onCurrentIndexChanged(0);
+                        });
+                      },
                     );
                   } else if (state is Authenticated) {
                     return TimeLinerSideBarButton(
                       icon: state.user.photoURL,
                       iconSize: MediaQuery.of(context).size.width,
                       iconColor: Colors.grey,
-                      onButtonPressed: () {},
+                      onButtonPressed: () {
+                        setState(() {
+                          widget.onCurrentIndexChanged(0);
+                        });
+                      },
                     );
                   } else {
                     return TimeLinerSideBarButton(
@@ -71,7 +79,7 @@ class _TimeLinerSideBarState extends State<TimeLinerSideBar> {
                 iconColor: Colors.blueAccent,
                 onButtonPressed: () {
                   setState(() {
-                    widget.onCurrentIndexChanged(0);
+                    widget.onCurrentIndexChanged(1);
                   });
                 },
               ),
@@ -82,7 +90,7 @@ class _TimeLinerSideBarState extends State<TimeLinerSideBar> {
                 iconColor: Colors.orangeAccent,
                 onButtonPressed: () {
                   setState(() {
-                    widget.onCurrentIndexChanged(1);
+                    widget.onCurrentIndexChanged(2);
                   });
                 },
               ),
@@ -91,14 +99,18 @@ class _TimeLinerSideBarState extends State<TimeLinerSideBar> {
                 icon: Icons.my_library_books_rounded,
                 iconSize: 30,
                 iconColor: Colors.redAccent,
-                onButtonPressed: () {},
+                onButtonPressed: () {
+                  widget.onCurrentIndexChanged(3);
+                },
               ),
               SizedBox(height: 30),
               TimeLinerSideBarButton(
-                icon: Icons.label_rounded,
+                icon: Icons.bookmark_rounded,
                 iconSize: 30,
                 iconColor: Colors.indigoAccent,
-                onButtonPressed: () {},
+                onButtonPressed: () {
+                  widget.onCurrentIndexChanged(4);
+                },
               ),
               SizedBox(height: 20),
               Divider(thickness: 3, indent: 10, endIndent: 10),

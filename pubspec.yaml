@@ -27,11 +27,9 @@ dependencies:
   graphql: ^4.0.1
   timeago: ^3.0.2
   badges: ^1.2.0
+  fluttertoast: ^8.0.6
+  url_launcher: ^6.0.3
 
-
-
-
-  
   cupertino_icons: ^1.0.2
 
 dev_dependencies:

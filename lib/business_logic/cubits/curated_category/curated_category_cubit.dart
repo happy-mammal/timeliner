@@ -10,12 +10,11 @@ class CuratedCategoryCubit extends Cubit<CuratedCategoryState> {
     this.articleRepository = ArticleRepository();
   }
 
-  Future<void> getCuratedCategoryFeed(String category, String limit) async {
-    print('INSIDE CCFL');
+  Future<void> getCuratedCategoryFeed(String category, int limit) async {
     emit(CuratedCategoryLoading());
     try {
       var result = await articleRepository.fetchArticlesFromCategory(category, limit);
-      print(result);
+
       emit(CuratedCategorySuccess(data: result));
     } catch (e) {
       emit(CuratedCategoryFailed(message: e.toString()));

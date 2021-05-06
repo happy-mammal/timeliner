@@ -11,7 +11,6 @@ class GetStoriesCubit extends Cubit<GetStoriesState> {
   }
 
   Future<void> getStories() async {
-    print('GET STORIES');
     emit(GetStoriesLoading());
     try {
       var result = await articleRepository.fetchStories();

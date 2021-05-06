@@ -10,14 +10,14 @@ class SearchCubit extends Cubit<SearchState> {
     this.articleRepository = ArticleRepository();
   }
 
-  Future<void> getSearchResults(String term, String limit) async {
+  Future<void> getSearchResults(List<String> terms) async {
     emit(SearchLoading());
     try {
       var results = [];
-      if (term.isEmpty) {
+      if (terms.isEmpty) {
         results = await articleRepository.fetchLatest();
       } else {
-        results = await articleRepository.fetchArticles(term, limit);
+        results = await articleRepository.fetchArticlesByTerm(terms);
       }
       emit(SearchSuccess(data: results));
     } catch (e) {

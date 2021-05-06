@@ -11,7 +11,6 @@ class GetTrendingCubit extends Cubit<GetTrendingState> {
   }
 
   Future<void> getTrending() async {
-    print('GET TRENDING');
     emit(GetTrendingLoading());
     try {
       var result = await articleRepository.fetchTrending();

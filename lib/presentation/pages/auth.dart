@@ -19,11 +19,27 @@ class _AuthPageState extends State<AuthPage> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is Authenticated) {
-              Navigator.of(context).pushReplacementNamed('/home', arguments: {"uid": state.user.uid});
+              Navigator.of(context).pushReplacementNamed(
+                '/home',
+                arguments: {
+                  "uid": state.user.uid,
+                  "email": state.user.email,
+                  "name": state.user.displayName,
+                  "photoURL": state.user.photoURL,
+                },
+              );
             } else if (state is UnAuthenticated) {
             } else if (state is SignInSuccessfull) {
               if (state.isExists) {
-                Navigator.of(context).pushReplacementNamed('/home', arguments: {"uid": state.user.uid});
+                Navigator.of(context).pushReplacementNamed(
+                  '/home',
+                  arguments: {
+                    "uid": state.user.uid,
+                    "email": state.user.email,
+                    "name": state.user.displayName,
+                    "photoURL": state.user.photoURL,
+                  },
+                );
               } else {
                 Navigator.of(context).pushReplacementNamed(
                   '/setup',

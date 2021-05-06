@@ -1,6 +1,7 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeliner/business_logic/blocs/user/user_bloc.dart';
 import 'package:timeliner/presentation/widgets/checkbox_card.dart';
@@ -100,13 +101,13 @@ class _SetupPageState extends State<SetupPage> {
               padding: const EdgeInsets.all(18.0),
               child: InkWell(
                 onTap: () {
-                  print('CLICKED HURRAY');
-                  BlocProvider.of<UserBloc>(context).add(CreateUserAccountEvent(
-                    widget.data["uid"],
-                    widget.data["email"],
-                    widget.data["name"],
-                    widget.data["photoURL"],
-                  ));
+                  if (isChoosed.length < 3) {
+                    Fluttertoast.showToast(msg: "Please choose atleast 3 topics.", toastLength: Toast.LENGTH_SHORT);
+                  } else {
+                    BlocProvider.of<UserBloc>(context).add(CreateUserAccountEvent(
+                      uid: widget.data["uid"],
+                    ));
+                  }
                 },
                 child: BlocListener<UserBloc, UserState>(
                   listener: (context, state) {
@@ -117,9 +118,19 @@ class _SetupPageState extends State<SetupPage> {
                           cats.add('"' + title[i] + '"');
                         }
                       }
-                      BlocProvider.of<UserBloc>(context).add(AddIntrestsEvent(cats, widget.data["uid"]));
+                      BlocProvider.of<UserBloc>(context).add(AddIntrestsEvent(intrests: cats, uid: widget.data["uid"]));
                     } else if (state is AddIntrestsSuccessfull) {
-                      Navigator.of(context).pushReplacementNamed('/home', arguments: {"uid": widget.data["uid"]});
+                      Navigator.of(context).pushReplacementNamed(
+                        '/home',
+                        arguments: {
+                          "uid": widget.data["uid"],
+                          "email": widget.data["email"],
+                          "name": widget.data["name"],
+                          "photoURL": widget.data["photoURL"],
+                        },
+                      );
+                    } else if (state is UserLoading) {
+                      Fluttertoast.showToast(msg: "Please wait setting up...", toastLength: Toast.LENGTH_LONG);
                     }
                   },
                   child: ClayContainer(

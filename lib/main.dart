@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timeliner/business_logic/blocs/auth/auth_bloc.dart';
-import 'package:timeliner/business_logic/blocs/user/user_bloc.dart';
 import 'package:timeliner/business_logic/cubits/app_theme/app_theme_cubit.dart';
 import 'package:timeliner/presentation/routes/app_route.dart';
 import 'package:timeliner/presentation/themes/app_theme.dart';
@@ -20,7 +19,6 @@ class TimeLiner extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AppThemeCubit>(create: (BuildContext context) => AppThemeCubit()),
-        BlocProvider<UserBloc>(create: (BuildContext context) => UserBloc()),
         BlocProvider<AuthBloc>(create: (BuildContext context) => AuthBloc()..add(AppStartedEvent())),
       ],
       child: TimeLinerMaterialApp(),

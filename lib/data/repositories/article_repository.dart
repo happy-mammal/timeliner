@@ -25,34 +25,6 @@ class ArticleRepository {
     }
   }
 
-  Future<List> fetchArticlesFromSource(String source, String limit) async {
-    List articleList = [];
-    GraphQLClient _client = graphQLConfiguration.myGQLClient();
-    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.getArticlesFromSource(source, limit))));
-    if (_result.hasException) {
-      throw Exception([_result.exception]);
-    } else if (!_result.hasException) {
-      articleList = _result.data["getArticlesFromSource"];
-      return articleList;
-    } else {
-      return articleList;
-    }
-  }
-
-  Future<List> fetchArticlesFromCategory(String category, String limit) async {
-    List articleList = [];
-    GraphQLClient _client = graphQLConfiguration.myGQLClient();
-    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.getArticlesFromCategory(category, limit))));
-    if (_result.hasException) {
-      throw Exception([_result.exception]);
-    } else if (!_result.hasException) {
-      articleList = _result.data["getArticlesFromCategory"];
-      return articleList;
-    } else {
-      return articleList;
-    }
-  }
-
   Future<List> fetchTrending() async {
     List articleList = [];
     GraphQLClient _client = graphQLConfiguration.myGQLClient();
@@ -81,14 +53,56 @@ class ArticleRepository {
     }
   }
 
-  Future<List> fetchArticles(String term, String limit) async {
+  Future<List> fetchArticlesByTerm(List<String> terms) async {
     List articleList = [];
     GraphQLClient _client = graphQLConfiguration.myGQLClient();
-    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.getArticles(term, limit))));
+    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.getArticlesByTerm(terms))));
     if (_result.hasException) {
       throw Exception([_result.exception]);
     } else if (!_result.hasException) {
-      articleList = _result.data["getArticles"];
+      articleList = _result.data["getArticlesByTerm"];
+      return articleList;
+    } else {
+      return articleList;
+    }
+  }
+
+  Future<List> fetchArticlesById(List<String> articleIds) async {
+    List articleList = [];
+    GraphQLClient _client = graphQLConfiguration.myGQLClient();
+    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.getArticlesById(articleIds))));
+    if (_result.hasException) {
+      throw Exception([_result.exception]);
+    } else if (!_result.hasException) {
+      articleList = _result.data["getArticlesById"];
+      return articleList;
+    } else {
+      return articleList;
+    }
+  }
+
+  Future<List> fetchArticlesFromSource(String source, int limit) async {
+    List articleList = [];
+    GraphQLClient _client = graphQLConfiguration.myGQLClient();
+    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.getArticlesFromSource(source, limit))));
+    if (_result.hasException) {
+      throw Exception([_result.exception]);
+    } else if (!_result.hasException) {
+      articleList = _result.data["getArticlesFromSource"];
+      return articleList;
+    } else {
+      return articleList;
+    }
+  }
+
+  Future<List> fetchArticlesFromCategory(String category, int limit) async {
+    List articleList = [];
+    GraphQLClient _client = graphQLConfiguration.myGQLClient();
+    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.getArticlesFromCategory(category, limit))));
+    if (_result.hasException) {
+      throw Exception([_result.exception]);
+    } else if (!_result.hasException) {
+      articleList = _result.data["getArticlesFromCategory"];
       return articleList;
     } else {
       return articleList;

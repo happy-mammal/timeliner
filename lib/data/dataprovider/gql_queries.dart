@@ -3,114 +3,36 @@ class GqlQueries {
     return '''
       query{
         getStories{
-          id
-          category
-          image
-          title
-          description
-          source
-          publishedAt
+          	id
+            title
+            description
+            content
+            image
+            url
+            source
+            source_url
+            category
+            publishedAt
+            keywords
         }
       }''';
-  }
-
-  String getArticlesFromSource(String source, String limit) {
-    return '''
-      query{
-        getArticlesFromSource(source:"''' +
-        source +
-        '''"limit:''' +
-        limit +
-        '''){
-          id
-          image
-          category
-          title
-        }
-      }
-    ''';
-  }
-
-  String getArticlesFromCategory(String category, String limit) {
-    return '''
-      query{
-        getArticlesFromCategory(category: "''' +
-        category +
-        '''", limit:''' +
-        limit +
-        ''') {
-          id
-          image
-          source
-          title
-          category
-          publishedAt
-        }
-      }
-    ''';
   }
 
   String getTrending() {
     return '''
       query{
         getTrending{
-          id
-          title
-          description
-          image
-          category
-          source
-          publishedAt
-        }
-      }
-    ''';
-  }
-
-  String getUserDetails(String uid) {
-    return '''query{
-      getUserDetail(id:"''' +
-        uid +
-        '''"){
-        id
-        name
-        email
-        profile_url
-        intrest
-        saved
-      }
-    }''';
-  }
-
-  String addUser(String uid, String name, String email, String profile) {
-    return '''
-      mutation{
-        addUser(uid:"''' +
-        uid +
-        '''",name:"''' +
-        name +
-        '''",email:"''' +
-        email +
-        '''",profile_url:"''' +
-        profile +
-        '''"){
-          id
-        }
-      }
-    ''';
-  }
-
-  String getArticles(String term, String limit) {
-    return '''
-      query{
-        getArticles(term:"''' +
-        term +
-        '''"){
-          id
-          title
-          image
-          category
-          source
-          publishedAt
+          	id
+            title
+            description
+            content
+            image
+            url
+            source
+            source_url
+            category
+            publishedAt
+            keywords
         }
       }
     ''';
@@ -118,30 +40,203 @@ class GqlQueries {
 
   String getLatest() {
     return '''
+    query{
+      getLatest{
+        id
+        title
+        description
+        content
+        image
+        url
+        source
+        source_url
+        category
+        publishedAt
+        keywords
+      }
+    }
+    ''';
+  }
+
+  String getArticlesByTerm(List<String> terms) {
+    return '''
       query{
-        getLatest{
-          id
-          title
-          description
-          image
-          category
-          source
-          publishedAt
+        getArticlesByTerm(terms:''' +
+        terms.toString() +
+        '''){
+          	id
+            title
+            description
+            content
+            image
+            url
+            source
+            source_url
+            category
+            publishedAt
+            keywords
         }
       }
     ''';
   }
 
-  String addIntrest(List<String> intrests, String uid) {
+  String getArticlesById(List<String> articleIds) {
     return '''
-      mutation{
-        addIntrest(intrest:''' +
-        intrests.toString() +
-        ''',uid:"''' +
+      query{
+        getArticlesById(articleIds:''' +
+        articleIds.toString() +
+        '''){
+          	id
+            title
+            description
+            content
+            image
+            url
+            source
+            source_url
+            category
+            publishedAt
+            keywords
+        }
+      }
+    ''';
+  }
+
+  String getArticlesFromSource(String source, int limit) {
+    return '''
+      query{
+        getArticlesFromSource(source:"''' +
+        source +
+        '''"limit:''' +
+        limit.toString() +
+        '''){
+          	id
+            title
+            description
+            content
+            image
+            url
+            source
+            source_url
+            category
+            publishedAt
+            keywords
+        }
+      }
+    ''';
+  }
+
+  String getArticlesFromCategory(String category, int limit) {
+    return '''
+      query{
+        getArticlesFromCategory(category: "''' +
+        category +
+        '''", limit:''' +
+        limit.toString() +
+        ''') {
+          	id
+            title
+            description
+            content
+            image
+            url
+            source
+            source_url
+            category
+            publishedAt
+            keywords
+        }
+      }
+    ''';
+  }
+
+  String getUserDetails(String uid) {
+    return '''query{
+      getUserDetails(userId:"''' +
         uid +
         '''"){
-          id
-          intrest
+        userId
+        intrests
+        saves
+        istores
+        sstores
+      }
+    }''';
+  }
+
+  String addUser(String uid) {
+    return '''
+      mutation{
+        addUser(userId:"''' +
+        uid +
+        '''"){
+          userId
+        }
+      }
+    ''';
+  }
+
+  String addIntrests(List<String> intrests, String uid) {
+    return '''
+      mutation{
+        addIntrests(intrests:''' +
+        intrests.toString() +
+        ''',userId:"''' +
+        uid +
+        '''"){
+          userId
+          intrests
+        }
+      }
+    ''';
+  }
+
+  String addSaves(List<String> articleIds, String uid) {
+    return '''
+      mutation{
+        addSaves(articleIds:''' +
+        articleIds.toString() +
+        ''',userId:"''' +
+        uid +
+        '''"){
+          userId
+          saves
+        }
+      }
+    ''';
+  }
+
+  String removeIntrests(List<String> intrests, String uid, List<String> stores) {
+    return '''
+      mutation{
+        removeIntrests(intrests:''' +
+        intrests.toString() +
+        ''',userId:"''' +
+        uid +
+        '''",stores:''' +
+        stores.toString() +
+        '''){
+          userId
+          intrests
+        }
+      }
+    ''';
+  }
+
+  String removeSaves(List<String> articleIds, String uid, List<String> stores) {
+    print(articleIds);
+    print(stores);
+    return '''
+      mutation{
+        removeSaves(articleIds:''' +
+        articleIds.toString() +
+        ''',userId:"''' +
+        uid +
+        '''",stores:''' +
+        stores.toString() +
+        '''){
+          userId
+          saves
         }
       }
     ''';

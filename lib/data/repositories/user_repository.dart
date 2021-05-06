@@ -52,7 +52,7 @@ class UserRepository {
     if (_result.hasException) {
       throw Exception([_result.exception]);
     } else if (!_result.hasException) {
-      return _result.data["getUserDetail"]["id"] != null ? true : false;
+      return _result.data["getUserDetails"]["intrests"].isEmpty ? false : true;
     } else {
       return false;
     }
@@ -64,15 +64,15 @@ class UserRepository {
     if (_result.hasException) {
       throw Exception([_result.exception]);
     } else if (!_result.hasException) {
-      return _result.data["getUserDetail"];
+      return _result.data["getUserDetails"];
     } else {
       return null;
     }
   }
 
-  Future<List> createUserAccount(String uid, String name, String email, String profile) async {
+  Future<List> createUserAccount(String uid) async {
     GraphQLClient _client = graphQLConfiguration.myGQLClient();
-    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.addUser(uid, name, email, profile))));
+    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.addUser(uid))));
     if (_result.hasException) {
       throw Exception([_result.exception]);
     } else if (!_result.hasException) {
@@ -84,11 +84,48 @@ class UserRepository {
 
   Future<List> addIntrests(List<String> intrests, String uid) async {
     GraphQLClient _client = graphQLConfiguration.myGQLClient();
-    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.addIntrest(intrests, uid))));
+    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.addIntrests(intrests, uid))));
     if (_result.hasException) {
       throw Exception([_result.exception]);
     } else if (!_result.hasException) {
-      return [_result.data["addIntrest"]];
+      return [_result.data["addIntrests"]];
+    } else {
+      return null;
+    }
+  }
+
+  Future<List> addSaves(List<String> articleIds, String uid) async {
+    GraphQLClient _client = graphQLConfiguration.myGQLClient();
+    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.addSaves(articleIds, uid))));
+    if (_result.hasException) {
+      throw Exception([_result.exception]);
+    } else if (!_result.hasException) {
+      return [_result.data["addSaves"]];
+    } else {
+      return null;
+    }
+  }
+
+  Future<List> removeIntrests(List<String> intrests, String uid, List<String> stores) async {
+    GraphQLClient _client = graphQLConfiguration.myGQLClient();
+    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.removeIntrests(intrests, uid, stores))));
+    if (_result.hasException) {
+      throw Exception([_result.exception]);
+    } else if (!_result.hasException) {
+      return [_result.data["removeIntrests"]];
+    } else {
+      return null;
+    }
+  }
+
+  Future<List> removeSaves(List<String> articleIds, String uid, List<String> stores) async {
+    GraphQLClient _client = graphQLConfiguration.myGQLClient();
+    QueryResult _result = await _client.query(QueryOptions(document: gql(gqlQueries.removeSaves(articleIds, uid, stores))));
+    if (_result.hasException) {
+      throw Exception([_result.exception]);
+    } else if (!_result.hasException) {
+      print(_result.data["removeSaves"]);
+      return [_result.data["removeSaves"]];
     } else {
       return null;
     }

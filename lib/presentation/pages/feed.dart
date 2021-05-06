@@ -17,12 +17,6 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends State<FeedPage> {
-  @override
-  void initState() {
-    BlocProvider.of<UserBloc>(context).add(GetUserDetailsEvent(uid: widget.data["uid"]));
-    super.initState();
-  }
-
   _processCategory(List<String> intrests) {
     List<String> sample = ["Sports", "Technology", "Science", "Health", "World", "Nation"];
     List<String> cats = [];
@@ -39,6 +33,12 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   @override
+  void initState() {
+    BlocProvider.of<UserBloc>(context).add(GetUserDetailsEvent(uid: widget.data["uid"]));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -48,14 +48,16 @@ class _FeedPageState extends State<FeedPage> {
           listener: (context, state) {
             if (state is GetUserDetailsSuccessfull) {
               List<String> intrests = [];
-              for (var i = 0; i < state.intrests["intrest"].length; i++) {
-                intrests.add(state.intrests["intrest"][i]);
+              List<String> processedIntrests = [];
+              for (var i = 0; i < state.intrests["intrests"].length; i++) {
+                intrests.add(state.intrests["intrests"][i]);
+                processedIntrests.add('"' + state.intrests["intrests"][i] + '"');
               }
               var randomCategory = _processCategory(intrests);
               print(randomCategory);
               BlocProvider.of<GetStoriesCubit>(context).getStories();
               BlocProvider.of<GetTrendingCubit>(context).getTrending();
-              BlocProvider.of<CuratedCategoryCubit>(context).getCuratedCategoryFeed(randomCategory, "3");
+              BlocProvider.of<CuratedCategoryCubit>(context).getCuratedCategoryFeed(randomCategory, 3);
             }
           },
           child: Container(),
@@ -91,6 +93,12 @@ class _FeedPageState extends State<FeedPage> {
                     category: state.data[i]["category"],
                     date: state.data[i]["publishedAt"],
                     source: state.data[i]["source"],
+                    onCardTap: () {
+                      Navigator.of(context).pushNamed(
+                        '/viewarticle',
+                        arguments: {"article": state.data[i], "uid": widget.data["uid"]},
+                      );
+                    },
                   ),
                 );
               }
@@ -161,6 +169,12 @@ class _FeedPageState extends State<FeedPage> {
                     category: state.data[i]["category"],
                     date: state.data[i]["publishedAt"],
                     source: state.data[i]["source"],
+                    onCardTap: () {
+                      Navigator.of(context).pushNamed(
+                        '/viewarticle',
+                        arguments: {"article": state.data[i], "uid": widget.data["uid"]},
+                      );
+                    },
                   ),
                 );
               }
@@ -230,6 +244,12 @@ class _FeedPageState extends State<FeedPage> {
                     category: state.data[i]["category"],
                     date: state.data[i]["publishedAt"],
                     source: state.data[i]["source"],
+                    onCardTap: () {
+                      Navigator.of(context).pushNamed(
+                        '/viewarticle',
+                        arguments: {"article": state.data[i], "uid": widget.data["uid"]},
+                      );
+                    },
                   ),
                 );
               }
@@ -299,6 +319,12 @@ class _FeedPageState extends State<FeedPage> {
                     category: "Stories",
                     date: state.data[i]["publishedAt"],
                     source: state.data[i]["source"],
+                    onCardTap: () {
+                      Navigator.of(context).pushNamed(
+                        '/viewarticle',
+                        arguments: {"article": state.data[i], "uid": widget.data["uid"]},
+                      );
+                    },
                   ),
                 );
               }
@@ -369,6 +395,12 @@ class _FeedPageState extends State<FeedPage> {
                     category: state.data[i]["category"],
                     date: state.data[i]["publishedAt"],
                     source: state.data[i]["source"],
+                    onCardTap: () {
+                      Navigator.of(context).pushNamed(
+                        '/viewarticle',
+                        arguments: {"article": state.data[i], "uid": widget.data["uid"]},
+                      );
+                    },
                   ),
                 );
               }

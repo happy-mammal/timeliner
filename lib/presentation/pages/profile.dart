@@ -58,7 +58,9 @@ class _ProfilePageState extends State<ProfilePage> {
           TimeLinerProfileButton(
             icon: Icons.info_rounded,
             text: "About Developer",
-            onButtonPressed: () {},
+            onButtonPressed: () {
+              Navigator.of(context).pushNamed('/about');
+            },
           ),
           SizedBox(height: 40),
         ],

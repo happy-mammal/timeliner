@@ -1,3 +1,4 @@
+import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -90,7 +91,31 @@ class _SavesPageState extends State<SavesPage> {
 
               results.shuffle();
 
-              return Column(children: results);
+              if (results.isNotEmpty) {
+                return Column(children: results);
+              } else {
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: ClayContainer(
+                        color: Theme.of(context).canvasColor,
+                        borderRadius: 20,
+                        child: TimeLinerResponsiveText(
+                          text: "No Saved Articles Found.\n\nTap on Save to add article in your Saved Articles while reading articles.",
+                          min: 25,
+                          max: 25,
+                          lines: 10,
+                          isBold: false,
+                          isItalic: false,
+                          pads: [20, 20, 20, 20],
+                          color: null,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
             } else {
               List<Widget> list = [];
 
